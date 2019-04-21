@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import '../App.css';
 
-const uuidv4 = require('uuid/v4');
+
 
 class AppComponent extends Component {
   constructor(props){
     super(props);
-
-    this.state={
-      userArray : []
-    }
   }
 
   handleSubmit=(e)=>{
@@ -21,30 +17,24 @@ class AppComponent extends Component {
     var hiddenID=document.getElementById("hide").value;
 
     var obj={
-      id:uuidv4(),
       firstName : first,
       lastName : last,
       contact : contact,
       email : email
     }
 
-
-
     //if it is new item-> hidden id will be empty
-    if((this.state.userArray) && (hiddenID==="")){
-      this.setState((state)=>({
-
-        userArray : [...state.userArray,obj]
-      }))
+    if((this.props.userArray) && (hiddenID==="")){
+      this.props.createUser(obj)
     }
     //if it is existing-> hidden id will not be empty
-    else if((this.state.userArray) && (hiddenID!=="")){
+    else if((this.props.userArray) && (hiddenID!=="")){
       first=document.getElementById("first").value;
       last=document.getElementById("last").value;
       contact=document.getElementById("contact").value;
       email=document.getElementById("email").value;
 
-      var updateArray=this.state.userArray;
+      var updateArray=this.props.userArray;
       updateArray.forEach((item,ind)=>{
         if(item.id===hiddenID){
           item.firstName=first;
@@ -56,16 +46,16 @@ class AppComponent extends Component {
 
       })
       console.log("updateArray",updateArray)
-      this.setState({
+      /*this.setState({
         userArray : [...updateArray]
-      })
+      })*/
 
     }
     //if it is the first item in the array
     else{
-      this.setState({
+      /*this.setState({
         userArray : [obj]
-      })
+      })*/
     }
 
     //console.log(this.state.userArray);
@@ -98,7 +88,7 @@ class AppComponent extends Component {
             <div>
               <ul>
                 {
-                  this.state.userArray.map((item,ind)=>{
+                  this.props.userArray.map((item,ind)=>{
                     if(item){
                       return (
                           <div key={item.id}>

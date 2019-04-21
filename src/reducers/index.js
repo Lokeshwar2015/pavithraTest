@@ -1,10 +1,20 @@
 
 
 const initialState={
-	name : "Pavithra"
+	name : "Pavithra",
+	userArray: []
 }
-const userReducer=(state=initialState,action)=>{
-return action;
-}
+const userReducer = (state=initialState,action)=>{
 
-export default userReducer;
+	switch (action.type) {
+		case 'CREATE_USER':
+			return {
+				userArray: [...state.userArray, action.payload]
+			};
+		default:
+		  return state;
+	}
+
+}
+export default userReducer
+
